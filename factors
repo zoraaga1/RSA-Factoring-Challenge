@@ -4,11 +4,14 @@ import sys
 import math
 
 def factorize(n):
+    factors = []
     for p in range(2, n + 1):
         if n % p == 0:
-            q = n // p
-            return f"{n}={p}*{q}"
-    return f"{n}=1*{n}"
+            factors.append(p)
+            n //= p
+            if n == 1:
+                break
+    return factors
 
 def main(input_file):
     with open(input_file, 'r') as file:
@@ -16,7 +19,8 @@ def main(input_file):
     
     for number in numbers:
         n = int(number)
-        factorization = factorize(n)
+        factors = factorize(n)
+        factorization = f"{n}={'*'.join(map(str, factors))}"
         print(factorization)
 
 if __name__ == '__main__':
