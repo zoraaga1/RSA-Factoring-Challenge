@@ -6,7 +6,12 @@ import math
 def factorize(num):
     for i in range(2, int(num ** 0.5) + 1):
         if num % i == 0:
-            return f"{num}={i}*{num//i}"
+            factor1 = i
+            factor2 = num // i
+            if factor1 < factor2:
+                return f"{num}={factor2}*{factor1}"
+            else:
+                return f"{num}={factor1}*{factor2}"
     return f"{num}=1*{num}"
 
 if __name__ == "__main__":
