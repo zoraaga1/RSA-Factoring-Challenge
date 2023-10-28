@@ -1,32 +1,30 @@
-# factors.py
+#!/usr/bin/python3
 
 import sys
 import math
 
-def factorize(n):
-    factors = []
-    for p in range(2, n + 1):
-        if n % p == 0:
-            factors.append(p)
-            n //= p
-            if n == 1:
-                break
-    return factors
+def factorize(num):
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % i == 0:
+            return f"{num}={i}*{num//i}"
+    return f"{num}=1*{num}"
 
-def main(input_file):
-    with open(input_file, 'r') as file:
-        numbers = file.read().splitlines()
-    
-    for number in numbers:
-        n = int(number)
-        factors = factorize(n)
-        factorization = f"{n}={'*'.join(map(str, factors))}"
-        print(factorization)
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: factors <file>")
         sys.exit(1)
 
     input_file = sys.argv[1]
-    main(input_file)
+
+    try:
+        with open(input_file, 'r') as file:
+            for line in file:
+                num = int(line.strip())
+                factorization = factorize(num)
+                print(factorization)
+    except FileNotFoundError:
+        print(f"File '{input_file}' not found.")
+        sys.exit(1)
+    except ValueError:
+        print("Invalid number in the file.")
+        sys.exit(1)
